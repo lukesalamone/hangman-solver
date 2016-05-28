@@ -15,7 +15,4 @@
 *.idea
 *.iml
 *.class
-
-#Helper files
-###############
-game_logic.txt
+error_log
