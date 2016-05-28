@@ -18,15 +18,21 @@ $(document).ready(function(){
 	}
 	document.getElementById("proto").oninput = evaluate;
 	document.getElementById("dead").oninput = evaluate;
+
+	$(".headings h2").click(function(e){
+		dataSelect(e.target);
+	});
 });
 
 var evaluate = function(){
 	if( $("#length").val() == "") return;
-	if( getProto() == "") return;
+	if( !checkProto() ) return;
 
+	$(".bottom-row").removeClass("hidden");
 	$("#loading").removeClass("hidden");
-	$(".column0").html("");
-	$(".column1").html("");
+	for(var i=0; i<4; i++){
+		$(".column" + i).html("");
+	}
 	// send ajax request
 	$.ajax({
 		url: 'lookup.php',
@@ -37,10 +43,37 @@ var evaluate = function(){
 		success: function(data, status) {
 			data = JSON.parse(data);
 			response = data;
-			console.log(data);
-			for(var i=0; i<data.words.length; i++){
-				$(".column" + i%2).append("<span>" + data.words[i] + "</span>");
+
+			var j=0;
+			var norm;
+			for(var key in response.letters){
+				if(norm == null){
+					norm = 0.95 / response.letters[key];
+				}
+				var percent = (response.letters[key] * 100).toFixed(2);
+				var str = key + " : " + percent + "%";
+				var entry = document.createElement("div");
+				var label = document.createElement("span");
+				var bar = document.createElement("div");
+				$(entry).addClass("letter-entry");
+				$(label).html(str);
+				$(bar).attr("style", "width:" + percent*norm + "%");
+				$(entry).append( $(label) );
+				$(entry).append( $(bar) );
+				$(".column" + j%2).append( $(entry) );
+				j++;
 			}
+
+			for(var i=0; i<data.words.length; i++){
+				var word = document.createElement("a");
+				var lbrk = document.createElement("br");
+				$(word).html(data.words[i]);
+				$(word).attr("href", "http://dictionary.com/browse/" + data.words[i]);
+				$(word).attr("target", "_blank");
+				$(".column" + (i%2 + 2) ).append( $(word) );
+				$(".column" + (i%2 + 2) ).append( $(lbrk) );
+			}
+			$("#possible").html(data.words.length + " Possible Words");
 		}, error: function(xhr, desc, err) {
 			console.log(xhr);
 			console.log("Details: " + desc + "\nError:" + err);
@@ -73,6 +106,33 @@ function getProto(){
 	return ret;
 }
 
+// return true if proto is not all asterisks
+function checkProto(){
+	var proto = getProto();
+	var flag = false;
+	for(var i=0; i<proto.length; i++){
+		if(proto.charAt(i) != "*"){
+			return true;
+		}
+	}
+	return false;
+}
+
 function getRandomClass(){
 	return classes[Math.floor(Math.random() * classes.length)];
+}
+
+function dataSelect(target){
+	if($(target).hasClass("selected")) return;
+
+	$("#likely").toggleClass("selected");
+	$("#possible").toggleClass("selected");
+
+	if(target.id == "likely"){
+		$("#lettergraph").removeClass("hidden");
+		$("#wordlist").addClass("hidden");
+	}else{
+		$("#lettergraph").addClass("hidden");
+		$("#wordlist").removeClass("hidden");
+	}
 }

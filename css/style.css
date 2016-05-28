@@ -15,6 +15,7 @@ input{
     border: 3px solid #00a2ff;
 	padding:5px;
 	outline:0;
+	min-width: 48px;
 }
 
 label{
@@ -67,6 +68,8 @@ label{
     border: 0;
     display:none;
     border-left:4px solid #00a2ff;
+    text-align: center;
+    min-width: 45px;
 }
 
 #proto input:first-child{
@@ -86,17 +89,116 @@ label{
 	display:block;
 }
 
-.column0, .column1{
-	display:inline-block;	
-	width:49%;
+.bottom-row div{
 	color:#fff;
 }
 
+.column0, .column1, .column2, .column3{
+	display:inline-block;	
+	width:49%;
+	color:#fff;
+	float:left;
+}
+
+.column1, .column3{
+	float:right;
+}
+
 #loading{
+	clear:both;
 	background: url('../img/loading.gif');
     width: 64px;
     height: 64px;
     margin: 20px auto;
+}
+
+.headings{
+	width:100%;
+	height:50px;
+	margin-bottom:20px;
+}
+
+.headings h2 {
+    display: inline-block;
+    color: #222;
+    background-color: #fff;
+    margin:0;
+    padding: 10px;
+    border: 3px solid #00a2ff;
+    font-size: 20px;
+    width: 40%;
+    float: left;
+}
+
+.headings h2:last-child{
+	float:right;
+}
+
+.headings h2:hover{
+	color:#000;
+	background-color:rgba(0, 162, 255, 0.9);
+	cursor:pointer;
+}
+
+.headings h2.selected{
+	background-color:#00a2ff;
+	color:#fff;
+}
+
+#lettergraph{
+	width:100%;
+	overflow-wrap:break-word;
+    float: left;
+    text-align: left;
+}
+
+.letter-entry{
+	position:relative;
+	height: 19px;
+    margin: 3px 0px;
+    padding: 2px 10px;
+}
+
+.letter-entry span{
+	position: relative;
+	z-index: 10;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+}
+
+.letter-entry div{
+	position:absolute;
+	top:0;
+	background:#00a2ff;
+	height:100%;
+	width:0;
+	z-index: 8;
+	border-radius: 0 20px 20px 0;
+	-webkit-transition: width 0.5s ease-in-out;
+	transition: width 0.5s ease-in-out;
+}
+
+.column0 .letter-entry span{
+	float:right;
+}
+
+.column0 .letter-entry div{
+	right:0;
+	border-radius: 20px 0 0 20px;
+}
+
+#wordlist a, #wordlist a:visited{
+	display: inline-block;
+	text-decoration: none;
+	color:#fff;
+}
+
+#wordlist a:hover, #wordlist a:focus, #wordlist a:active{
+	text-decoration: underline;
+}
+
+#wordlist a:after { 
+     content:"\A"; 
+     white-space:pre; 
 }
 
 .hidden{
