@@ -1,0 +1,51 @@
+body{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color: #00a2ff;
+	margin:0;
+	overflow:hidden;
+	font-family:"Lucida Console", Monaco, monospace;
+}
+
+input{
+	font-size:30px;
+	font-family:"Lucida Console", Monaco, monospace;
+    background: rgba(255,255,255,0.7);
+    border: 3px solid #00a2ff;
+	padding:5px;
+}
+
+label{
+	color:#fff;
+	display:block;
+	text-align:center;
+}
+
+.content{
+    display: block;
+    text-align: center;
+    width: 80%;
+    margin: 10% auto;
+	padding:20px;
+	background:rgba(0,0,0,0.9);
+}
+
+.top-row{
+	margin-bottom:20px;
+}
+
+.top-row div{
+	display:inline-block;
+}
+
+.word-length input{
+	display:block;
+	margin:0 auto;
+}
+
+.second-row{
+	display:inline-block;
+}
+
+
