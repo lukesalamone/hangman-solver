@@ -3,6 +3,7 @@ var classes = ["skull", "noose", "pencil", "star", "calculator",
 
 var length;
 var response;
+var blocking = false;
 
 $(document).ready(function(){
 	setProto();
@@ -25,6 +26,7 @@ $(document).ready(function(){
 });
 
 var evaluate = function(){
+	if(blocking) return;
 	if( $("#length").val() == "") return;
 	if( !checkProto() ) return;
 
@@ -33,6 +35,9 @@ var evaluate = function(){
 	for(var i=0; i<4; i++){
 		$(".column" + i).html("");
 	}
+
+	blocking = true;
+
 	// send ajax request
 	$.ajax({
 		url: 'lookup.php',
@@ -79,6 +84,7 @@ var evaluate = function(){
 			console.log("Details: " + desc + "\nError:" + err);
 		}, complete: function(){
 			$("#loading").addClass("hidden");
+			blocking = false;	
 		}
 	}); // end ajax call
 };
@@ -103,13 +109,12 @@ function getProto(){
 			ret += $($("#proto").children()[i]).val();
 		}
 	}
-	return ret;
+	return ret.toLowerCase();
 }
 
 // return true if proto is not all asterisks
 function checkProto(){
 	var proto = getProto();
-	var flag = false;
 	for(var i=0; i<proto.length; i++){
 		if(proto.charAt(i) != "*"){
 			return true;

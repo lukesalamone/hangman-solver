@@ -1,11 +1,3 @@
-<?php
-	function getRandomClass(){
-		$classes = array("skull", "noose", "pencil", "star", "calculator",
- 					"tile-a", "tile-b", "tile-c");
-		return $classes[ rand(0, count($classes) - 1) ];
-	}
-?>
-
 <html>
 	<head>
 	    <meta charset="utf-8">
@@ -34,7 +26,7 @@
 			<?php 
 				
 				for($i=0; $i<300; $i++){
-					echo "<div class=" . getRandomClass() . "></div>";
+					echo "<div style='background-position-y:" . rand(0,7)*60 . "px'></div>";
 				}
 			?>
 		</div>
